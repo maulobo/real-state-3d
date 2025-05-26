@@ -33,6 +33,7 @@ export default function Test() {
   return (
     <>
       <Canvas
+        dpr={[1, 1.5]}
         shadows
         gl={{ antialias: true }}
         camera={{ position: [10, 11, 12], fov: 60, near: 0.01 }}
