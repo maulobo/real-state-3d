@@ -35,7 +35,7 @@ export default function Test() {
       <Canvas
         shadows
         gl={{ antialias: true }}
-        camera={{ position: [0, 1, 2], fov: 60, near: 0.01 }}
+        camera={{ position: [10, 11, 12], fov: 60, near: 0.01 }}
         toneMapped={true}
       >
         <Suspense fallback={null}>
