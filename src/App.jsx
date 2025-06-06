@@ -7,10 +7,8 @@ function App() {
       <header>
         <h1>Modelo 3d</h1>
       </header>
-
-      <main>
-        <Edificio />
-      </main>
+      <Edificio />
+      <main></main>
     </div>
   );
 }
