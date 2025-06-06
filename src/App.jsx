@@ -1,5 +1,5 @@
 import "./App.css";
-import Edificio from "./components/3d/edificio";
+import { Edificio } from "./components/3d/edificio";
 
 function App() {
   return (
@@ -7,8 +7,10 @@ function App() {
       <header>
         <h1>Modelo 3d</h1>
       </header>
-      <Edificio />
-      <main></main>
+
+      <main>
+        <Edificio />
+      </main>
     </div>
   );
 }
