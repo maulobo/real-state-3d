@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   useGLTF,
@@ -10,21 +10,46 @@ import {
   Sky,
   AccumulativeShadows,
 } from "@react-three/drei";
+import * as THREE from "three";
+
+function Lights() {
+  return (
+    <>
+      <ambientLight intensity={3} />
+      <directionalLight
+        position={[10, 20, 10]}
+        intensity={2}
+        castShadow
+        shadow-bias={-0.001}
+        shadow-normalBias={0.05}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-near={1}
+        shadow-camera-far={100}
+        shadow-camera-left={-15}
+        shadow-camera-right={15}
+        shadow-camera-top={15}
+        shadow-camera-bottom={-15}
+      />
+      {/* Ejemplo de spotlight funcional */}
+
+      <spotLight
+        position={[0, 30, 0]}
+        angle={0.3}
+        penumbra={0.5}
+        intensity={1}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-bias={-0.001}
+        target-position={[0, 0, 0]}
+      />
+    </>
+  );
+}
 
 function Probe({ ...props }) {
-  const { scene } = useGLTF(
-    "https://images.smartcloudstudio.com/fiber/mini.glb"
-  );
-
-  useEffect(() => {
-    scene.traverse((child) => {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
-    // Escala el objeto raíz
-  }, [scene]);
+  const { scene } = useGLTF("/deptosok.glb");
 
   return <primitive object={scene} {...props} />;
 }
@@ -33,7 +58,6 @@ export default function Test() {
   return (
     <>
       <Canvas
-        dpr={[1, 1.5]}
         shadows
         gl={{ antialias: true }}
         camera={{ position: [10, 11, 12], fov: 60, near: 0.01 }}
@@ -41,41 +65,43 @@ export default function Test() {
       >
         <Suspense fallback={null}>
           <Sky />
-          <AccumulativeShadows
-            position={[0, -0.001, 0]}
-            opacity={0.6}
-            scale={10}
-            blur={2.5}
-            far={1}
-          />
-          {/* DISMINUYE LA LUZ AMBIENTAL */}
-          <ambientLight intensity={1} position={[-10, 10, 10]} />
-          <directionalLight
-            position={[8, 10, -5]}
-            intensity={3}
-            castShadow
-            shadow-bias={-0.001}
-            shadow-normalBias={0.05}
-            shadow-mapSize-width={2048}
-            shadow-mapSize-height={2048}
-            shadow-camera-near={1}
-            shadow-camera-far={100}
-            shadow-camera-left={-100}
-            shadow-camera-right={100}
-            shadow-camera-top={100}
-            shadow-camera-bottom={-100}
-          />
 
+          {/* DISMINUYE LA LUZ AMBIENTAL */}
+          <Lights />
           <Probe position={[0, 0, 0]} />
 
           <Environment
-            preset="sunset"
+            preset="city"
             backgroundIntensity={0.2}
             environmentIntensity={0.2}
           />
+          {/* plAno recibidor de sombras */}
+          {/* <mesh
+            rotation={[-Math.PI / 2, 0, 0]}
+            position={[0, 0, 0]}
+            receiveShadow
+          >
+            <planeGeometry args={[100, 100]} />
+            <meshStandardMaterial
+              color="#000000"
+              opacity={1}
+              side={2}
+              depthWrite={false}
+            />
+          </mesh> */}
         </Suspense>
         <Preload all />
-        <OrbitControls minDistance={0.1} enableDamping dampingFactor={0.1} />
+        {/* limitar controles a menor que 0 en y */}
+        <OrbitControls
+          minPolarAngle={0}
+          maxPolarAngle={Math.PI / 2 - 0.1}
+          enableZoom={true}
+          enablePan={true}
+          enableRotate={true}
+          autoRotate={false}
+          autoRotateSpeed={1.0}
+          minDistance={1}
+        />
       </Canvas>
       <Stats />
       <Loader

@@ -1,5 +1,5 @@
 import "./App.css";
-import Test from "./components/test";
+import Edificio from "./components/3d/edificio";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       </header>
 
       <main>
-        <Test />
+        <Edificio />
       </main>
     </div>
   );
