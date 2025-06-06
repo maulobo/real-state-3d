@@ -17,7 +17,7 @@ import { Ground1, Ground2 } from "./ground";
 import { ModelEntorno, ModelEntorno2 } from "./model-enterno";
 import { useGLTF } from "@react-three/drei";
 
-export function Edificio() {
+export default function Edificio() {
   useGLTF.preload("/entorno-cont.glb");
   useGLTF.preload("/entorno-2.glb");
   useGLTF.preload("/edificio.glb");
