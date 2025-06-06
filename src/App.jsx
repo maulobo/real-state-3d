@@ -1,5 +1,6 @@
 import "./App.css";
 import { Edificio } from "./components/3d/edificio";
+import Test from "./components/test";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       </header>
 
       <main>
-        <Edificio />
+        <Test />
       </main>
     </div>
   );
