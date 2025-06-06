@@ -1,5 +1,4 @@
 import "./App.css";
-import { Edificio } from "./components/3d/edificio";
 import Test from "./components/test";
 
 function App() {
